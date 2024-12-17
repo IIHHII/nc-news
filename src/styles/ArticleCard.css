@@ -1,0 +1,26 @@
+
+.article-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article-card h3 {
+  margin: 0 0 0.5rem;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+.article-card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
