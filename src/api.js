@@ -17,3 +17,9 @@ export const fetchArticleComments = (article_id) => {
     .get(`${BASE_URL}/articles/${article_id}/comments`)
     .then((res) => res.data.articleComments);
 };
+
+export const updateArticleVotes = (article_id, voteChange) => {
+  return axios.patch(`${BASE_URL}/articles/${article_id}`, {
+    inc_votes: voteChange,
+  });
+};
