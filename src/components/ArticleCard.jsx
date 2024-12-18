@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/ArticleCard.css";
 
 const ArticleCard = ({ article }) => {
@@ -17,7 +18,9 @@ const ArticleCard = ({ article }) => {
       </p>
       <div className="article-details">
         <p>Votes: {article.votes}</p>
-        <button className="read-more-btn">Read More</button>
+        <Link to={`/articles/${article.article_id}`} className="read-more-btn">
+          Read More
+        </Link>
       </div>
     </div>
   );
