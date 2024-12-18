@@ -1,0 +1,22 @@
+.comment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.comment-author {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.comment-body {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.comment-votes {
+  font-size: 0.8rem;
+  color: #888;
+}

@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { fetchSingleArticle } from "../api";
+import CommentList from "./Commentlist";
 import "../styles/SingleArticle.css";
 
 const SingleArticle = () => {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const { article_id } = useParams(); 
-  console.log("Article ID:", article_id);
+  const { article_id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`https://burhan-s-project.onrender.com/api/articles/${article_id}`)
-      .then((response) => {
-        setArticle(response.data.article);
+    fetchSingleArticle(article_id)
+      .then((data) => {
+        setArticle(data);
         setIsLoading(false);
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setError("Failed to load article.");
         setIsLoading(false);
       });
   }, [article_id]);
@@ -28,34 +26,24 @@ const SingleArticle = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="single-article">
-      {isLoading ? (
-        <p>Loading article...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : article && article.length > 0 ? (
-        <>
-          <h1 className="article-title">{article[0].title}</h1>
-          <img
-            src={article[0].article_img_url}
-            alt={article[0].title}
-            className="article-image"
-          />
-          <p className="article-meta">
-            <span>By: {article[0].author}</span> | <span>Topic: {article[0].topic}</span>
-          </p>
-          <div className="article-body">
-            <p>{article[0].body}</p>
-          </div>
-          <p className="article-votes">Votes: {article[0].votes}</p>
-        </>
-      ) : (
-        <p>No article data found.</p>
-      )}
-    </div>
+    <section className="single-article">
+      <h1 className="article-title">{article.title}</h1>
+      <img
+        src={article.article_img_url}
+        alt={article.title}
+        className="article-image"
+      />
+      <p className="article-meta">
+        <span>By: {article.author}</span> | <span>Topic: {article.topic}</span>
+      </p>
+      <div className="article-body">
+        <p>{article.body}</p>
+      </div>
+      <p className="article-votes">Votes: {article.votes}</p>
+
+      <CommentList article_id={article_id} />
+    </section>
   );
-  
-  
 };
 
 export default SingleArticle;

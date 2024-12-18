@@ -67,4 +67,13 @@
       font-size: 1rem;
     }
   }
+
+  .comments-section {
+    margin-top: 2rem;
+  }
+  
+  .comments-section h2 {
+    margin-bottom: 1rem;
+  }
+  
   

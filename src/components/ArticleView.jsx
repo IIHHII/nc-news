@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { fetchSingleArticle } from "../api";
 import "../styles/ArticleView.css";
 
 const ArticleView = () => {
-    const [article, setArticle] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const { article_id } = useParams();
+  const [article, setArticle] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { article_id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`https://burhan-s-project.onrender.com/api/articles/${article_id}`)
-      .then((response) => {
-        setArticle(response.data.article);
+    fetchSingleArticle(article_id)
+      .then((data) => {
+        setArticle(data);
         setIsLoading(false);
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setError("Failed to load article.");
         setIsLoading(false);
       });
   }, [article_id]);
@@ -26,7 +25,7 @@ const ArticleView = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="article-view">
+    <section className="article-view">
       <h1 className="article-title">{article.title}</h1>
       <img
         src={article.article_img_url}
@@ -40,7 +39,7 @@ const ArticleView = () => {
         <p>{article.body}</p>
       </div>
       <p className="article-votes">Votes: {article.votes}</p>
-    </div>
+    </section>
   );
 };
 
