@@ -34,3 +34,6 @@ export const postComment = (article_id, commentData) => {
     .then((res) => res.data.comment);
 };
 
+export const deleteComment = (comment_id) => {
+  return axios.delete(`${BASE_URL}/comments/${comment_id}`);
+};
