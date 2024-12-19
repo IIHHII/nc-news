@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleArticle, updateArticleVotes } from "../api";
 import CommentList from "./Commentlist";
+import VoteButtons from "./VoteButtons";
 import "../styles/SingleArticle.css";
 
 const SingleArticle = () => {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isVoting, setIsVoting] = useState(false);
 
   const { article_id } = useParams();
 
@@ -23,21 +23,6 @@ const SingleArticle = () => {
         setIsLoading(false);
       });
   }, [article_id]);
-
-  const handleVote = (voteChange) => {
-    if (!article) return;
-
-    setIsVoting(true);
-    setArticle((prev) => ({ ...prev, votes: prev.votes + voteChange }));
-
-    updateArticleVotes(article_id, voteChange)
-      .then(() => setIsVoting(false))
-      .catch(() => {
-        setIsVoting(false);
-        setArticle((prev) => ({ ...prev, votes: prev.votes - voteChange }));
-        setError("Failed to update vote. Please try again.");
-      });
-  };
 
   if (isLoading) return <p>Loading article...</p>;
   if (error) return <p>{error}</p>;
@@ -56,23 +41,11 @@ const SingleArticle = () => {
       <div className="article-body">
         <p>{article.body}</p>
       </div>
-      <div className="article-votes">
-        <p>Votes: {article.votes}</p>
-        <button
-          onClick={() => handleVote(1)}
-          disabled={isVoting}
-          className="vote-button"
-        >
-          Upvote
-        </button>
-        <button
-          onClick={() => handleVote(-1)}
-          disabled={isVoting}
-          className="vote-button"
-        >
-          Downvote
-        </button>
-      </div>
+      <VoteButtons
+        article_id={article.article_id}
+        initialVotes={article.votes}
+        updateVotes={updateArticleVotes}
+      />
       <CommentList article_id={article_id} />
     </section>
   );
