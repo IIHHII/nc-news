@@ -4,7 +4,7 @@ import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import "../styles/CommentList.css";
 
-const CommentList = ({ article_id }) => {
+const CommentList = ({ article_id, currentUser }) => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,6 +25,12 @@ const CommentList = ({ article_id }) => {
     setComments((prevComments) => [newComment, ...prevComments]);
   };
 
+  const handleCommentDeleted = (deletedCommentId) => {
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.comment_id !== deletedCommentId)
+    );
+  };
+
   if (isLoading) return <p>Loading comments...</p>;
   if (error) return <p>{error}</p>;
 
@@ -34,7 +40,12 @@ const CommentList = ({ article_id }) => {
       <CommentForm article_id={article_id} onCommentAdded={handleNewComment} />
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <CommentCard key={comment.comment_id} comment={comment} />
+          <CommentCard
+            key={comment.comment_id}
+            comment={comment}
+            currentUser={currentUser}
+            onCommentDeleted={handleCommentDeleted}
+          />
         ))
       ) : (
         <p>No comments yet.</p>

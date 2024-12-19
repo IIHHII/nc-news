@@ -11,6 +11,7 @@ const SingleArticle = () => {
   const [error, setError] = useState(null);
 
   const { article_id } = useParams();
+  const currentUser = "grumpy19";
 
   useEffect(() => {
     fetchSingleArticle(article_id)
@@ -46,7 +47,7 @@ const SingleArticle = () => {
         initialVotes={article.votes}
         updateVotes={updateArticleVotes}
       />
-      <CommentList article_id={article_id} />
+      <CommentList article_id={article_id} currentUser={currentUser} />
     </section>
   );
 };
