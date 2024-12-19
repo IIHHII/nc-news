@@ -23,3 +23,14 @@ export const updateArticleVotes = (article_id, voteChange) => {
     inc_votes: voteChange,
   });
 };
+
+export const postComment = (article_id, commentData) => {
+  const { author, body } = commentData;
+  return axios
+    .post(`${BASE_URL}/articles/${article_id}/comments`, {
+      username: author, 
+      body,
+    })
+    .then((res) => res.data.comment);
+};
+
