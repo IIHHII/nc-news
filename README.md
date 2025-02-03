@@ -32,4 +32,4 @@ DELETE /api/comments/:comment_id: Delete a comment.
 Technologies Used
 Node.js and Express for the backend.
 React for the frontend.
-Vite for bundling and development.
+Vite for bundling and development. 
